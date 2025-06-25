@@ -6,16 +6,23 @@ const TodoBox=()=>{
     const [tasks,setTasks]=useState([]);
     const [inputValue,setInputValue]=useState("");
 
+const handleEdit=(index)=>{
+const editTask=tasks[index];
+const newTask = prompt("edit task",inputValue);
+tasks[index]=newTask;
+const updatedTask=[...tasks];
+setTasks(updatedTask,newTask);
+}
+
     const handleAdd=()=>{
         setTasks([...tasks,inputValue]);
-        console.log("add");
     }
 
     const handleInput=(e)=>{
         const inputText=e.target.value;
-setInputValue(inputText);
-        console.log("input");
+        setInputValue(inputText);
     }
+
     return(
         <div className="max-h-[520px] w-[600px] bg-yellow-400 py-5 px-10" >
             <h1 className="text-2xl font-bold text-center mb-5">Todo List</h1>
@@ -24,10 +31,10 @@ setInputValue(inputText);
             onChange={handleInput}/>
             <Button text={"Add"} onclick={handleAdd}/>
             </div>
-            <div className="h-[300px] bg-blue-500 flex flex-col gap-3 overflow-y-scroll ">
+            <div className="max-h-[300px] bg-red-500 flex flex-col gap-3 overflow-y-scroll ">
             {
                 tasks.map((task,index)=>{
-                    return <Task inputValue={inputValue} todo={task} key={index}/>
+                    return <Task inputValue={inputValue} todo={task} key={index} handleEdit={()=>{handleEdit(index)}}/>
                 })
             }
         </div>
